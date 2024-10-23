@@ -1,0 +1,7 @@
+{
+    "usuarios": [
+      { "id": 1, "nombre": "Blackmist", "contrasenia": "contra" },
+      { "id": 2, "nombre": "Bonjo", "contrasenia": "1234" }
+    ]
+  }
+  

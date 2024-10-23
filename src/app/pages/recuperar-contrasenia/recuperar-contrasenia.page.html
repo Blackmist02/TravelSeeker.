@@ -1,0 +1,44 @@
+<ion-content [fullscreen]="true">  
+  
+  <div class="prueba">
+    <img class="avion" src="assets/imagenes/newTitle.png" alt="VueloSur">
+  </div>
+  <ion-grid>
+    <!-- Login, nombre de usuario -->
+      <ion-row class="ion-text-align-center">
+        <ion-col  class="ion-text-center">
+          <p class="ion-text-center">Recuperación de Contraseña</p>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center ">
+      <ion-col size="11">
+        <ion-item class="nombre_user">
+          <ion-label position="floating" > <ion-icon name="person-outline"></ion-icon> Email</ion-label>
+          <ion-input type="user" [(ngModel)]="loginusuario" ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="11" >
+        <ion-item>
+          <ion-label position="floating"><ion-icon name="key-outline" ></ion-icon> Ingresar Nueva Contraseña</ion-label>
+          <ion-input type="password" [(ngModel)]="logincontrasenia"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="11" >
+        <ion-item>
+          <ion-label position="floating"><ion-icon name="key-outline" ></ion-icon> Confirmar Nueva Contraseña</ion-label>
+          <ion-input type="password" [(ngModel)]="loginVerificarContrasenia"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="9">
+        <ion-button expand="block" (click)="cambiarContra()">CAMBIAR CONTRASEÑA</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+</ion-content>

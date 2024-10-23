@@ -1,0 +1,34 @@
+<ion-content [fullscreen]="true">
+  <div class="prueba">
+  <img class="avion" src="assets/imagenes/newTitle.png" alt="VueloSur">
+  </div>
+  <div class="boxLog">
+  <ion-grid>
+    <!-- Login, nombre de usuario -->
+    <ion-row class="ion-justify-content-center ">
+      <ion-col size="11">
+        <ion-item class="nombre_user">
+          <ion-label position="floating" > <ion-icon name="person-outline"></ion-icon> Email</ion-label>
+          <ion-input type="user" [(ngModel)]="loginUser"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="11" >
+        <ion-item>
+          <ion-label position="floating"><ion-icon name="key-outline"></ion-icon> Contraseña</ion-label>
+          <ion-input type="password" [(ngModel)]="loginPassword"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+    <ion-router-link routerLink="/recuperar-contrasenia" style="margin-top:10px; margin-bottom:10px">¿Olvidaste tu contraseña?</ion-router-link> 
+  </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="4">
+        <ion-button expand="block" (click)="login()" >INGRESAR</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "VuelosSA",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

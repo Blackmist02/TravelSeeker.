@@ -1,0 +1,49 @@
+<!-- home.page.html -->
+
+<ion-content>
+  <div class="prueba">
+    <img class="avion" src="assets/imagenes/newTitle.png" alt="VueloSur">
+  </div>
+  <div class="slider-container">
+    <div class="slider">
+      <p>{{ time }}</p>
+      <p>Bienvenido {{usuarioLogueado.nombre}}</p>
+    </div>
+  </div>
+  <div padding>
+    <form>
+      <ion-item>
+        <ion-label position="floating">Ciudad de Origen</ion-label>
+        <ion-select placeholder="Ciudad de Origen">
+          <ion-select-option *ngFor="let city of datosCiuadesOrigen" [value]="city">{{ city.ciudad }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Ciudad de Destino</ion-label>
+        <ion-select placeholder="Ciudad de Destino">
+          <ion-select-option *ngFor="let c_Destino of datosCiuadesDestino" [value]="c_Destino">{{ c_Destino.ciudad }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Fecha de Salida</ion-label>
+        <ion-input type="date" placeholder="Fecha de Salida"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Fecha de Regreso</ion-label>
+        <ion-input type="date" placeholder="Fecha de Regreso"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Número de Pasajeros</ion-label>
+        <ion-select placeholder="Numero de Pasajeros">
+          <ion-select-option *ngFor="let nro of numerosPasajeros" [value]="nro">{{ nro }}</ion-select-option>        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Clase</ion-label>
+        <ion-select placeholder="Clase">
+          <ion-select-option *ngFor="let class of clasesAv" [value]="class">{{ class.nombre }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-button expand="block">Buscar Vuelos</ion-button>
+    </form>
+  </div>
+</ion-content>
