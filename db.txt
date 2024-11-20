@@ -1,0 +1,156 @@
+CREATE DATABASE db_travelSeeker;
+use db_travelSeeker;
+
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(30),
+    apellido VARCHAR(30),
+    run VARCHAR(10),
+    email VARCHAR(30),
+    password VARCHAR(18)
+);
+
+
+
+CREATE TABLE destinos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(30),
+    ciudad VARCHAR(30),
+    pais VARCHAR(30),
+    descripcion VARCHAR(100),
+    precio INT
+);
+
+CREATE TABLE clases (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(30),
+    descripcion VARCHAR(100),
+    precio INT
+);
+
+CREATE TABLE reservas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT,
+    id_destino INT,
+    fecha DATE,
+    clase_reserva INT,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+    FOREIGN KEY (id_destino) REFERENCES destinos(id),
+    FOREIGN KEY (clase_reserva) REFERENCES clases(id)
+);
+
+
+create table origen (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(30),
+    ciudad VARCHAR(30),
+    pais VARCHAR(30),
+    descripcion VARCHAR(100),
+    precio INT
+);
+
+create table aviones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(30),
+    modelo VARCHAR(30),
+    capacidad INT,
+    origen INT,
+    destino INT,
+    FOREIGN KEY (origen) REFERENCES origen(id),
+    FOREIGN KEY (destino) REFERENCES destinos(id)
+);
+
+create table vuelos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_avion INT,
+    fecha DATE,
+    hora TIME,
+    FOREIGN KEY (id_avion) REFERENCES aviones(id)
+);
+
+CREATE VIEW suma_precios AS
+SELECT
+    (SELECT SUM(precio) FROM destinos) AS suma_destinos,
+    (SELECT SUM(precio) FROM clases) AS suma_clases,
+    (SELECT SUM(precio) FROM origen) AS suma_origen,
+    (SELECT SUM(precio) FROM destinos) + (SELECT SUM(precio) FROM clases) + (SELECT SUM(precio) FROM origen) AS total_suma;
+
+INSERT INTO usuarios (nombre, apellido, run, email, password) VALUES ('Juan', 'Perez', '12345678-9', 'jc@gmail.com', '12345678');
+INSERT INTO usuarios (nombre, apellido, run, email, password) VALUES ('Maria', 'Gomez', '98765432-1', 'mg@gmail.com', 'password123');
+INSERT INTO usuarios (nombre, apellido, run, email, password) VALUES ('Carlos', 'Lopez', '11223344-5', 'cl@gmail.com', 'qwerty123');
+INSERT INTO usuarios (nombre, apellido, run, email, password) VALUES ('Ana', 'Martinez', '55667788-6', 'am@gmail.com', 'abc12345');
+INSERT INTO usuarios (nombre, apellido, run, email, password) VALUES ('Luis', 'Fernandez', '99887766-7', 'lf@gmail.com', 'passw0rd');
+INSERT INTO usuarios (nombre, apellido, run, email, password) VALUES ('Pedro', 'Sanchez', '22334455-6', 'ps@gmail.com', 'password1');
+INSERT INTO usuarios (nombre, apellido, run, email, password) VALUES ('Laura', 'Diaz', '33445566-7', 'ld@gmail.com', 'password2');
+INSERT INTO usuarios (nombre, apellido, run, email, password) VALUES ('Jorge', 'Ramirez', '44556677-8', 'jr@gmail.com', 'password3');
+INSERT INTO usuarios (nombre, apellido, run, email, password) VALUES ('Sofia', 'Hernandez', '55667788-9', 'sh@gmail.com', 'password4');
+INSERT INTO usuarios (nombre, apellido, run, email, password) VALUES ('Marta', 'Ruiz', '66778899-0', 'mr@gmail.com', 'password5');
+
+
+INSERT INTO destinos (nombre, ciudad, pais, descripcion, precio) VALUES ('Playa del Carmen', 'Cancún', 'México', 'Hermosa playa con arena blanca', 500);
+INSERT INTO destinos (nombre, ciudad, pais, descripcion, precio) VALUES ('Machu Picchu', 'Cusco', 'Perú', 'Antigua ciudad inca', 700);
+INSERT INTO destinos (nombre, ciudad, pais, descripcion, precio) VALUES ('Taj Mahal', 'Agra', 'India', 'Majestuoso mausoleo', 800);
+INSERT INTO destinos (nombre, ciudad, pais, descripcion, precio) VALUES ('Gran Muralla', 'Beijing', 'China', 'Impresionante muralla histórica', 600);
+INSERT INTO destinos (nombre, ciudad, pais, descripcion, precio) VALUES ('Torre Eiffel', 'París', 'Francia', 'Famosa torre de hierro', 900);
+INSERT INTO destinos (nombre, ciudad, pais, descripcion, precio) VALUES ('Coliseo', 'Roma', 'Italia', 'Antiguo anfiteatro romano', 750);
+INSERT INTO destinos (nombre, ciudad, pais, descripcion, precio) VALUES ('Estatua de la Libertad', 'Nueva York', 'EE.UU.', 'Icono de la libertad', 850);
+INSERT INTO destinos (nombre, ciudad, pais, descripcion, precio) VALUES ('Monte Fuji', 'Honshu', 'Japón', 'Majestuoso volcán', 650);
+INSERT INTO destinos (nombre, ciudad, pais, descripcion, precio) VALUES ('Sagrada Familia', 'Barcelona', 'España', 'Impresionante basílica', 700);
+INSERT INTO destinos (nombre, ciudad, pais, descripcion, precio) VALUES ('Cristo Redentor', 'Río de Janeiro', 'Brasil', 'Estatua gigante de Cristo', 800);
+
+
+INSERT INTO clases (nombre, descripcion, precio) VALUES ('Económica', 'Clase económica con servicios básicos', 200);
+INSERT INTO clases (nombre, descripcion, precio) VALUES ('Business', 'Clase business con servicios premium', 500);
+INSERT INTO clases (nombre, descripcion, precio) VALUES ('Primera Clase', 'Clase de lujo con servicios exclusivos', 1000);
+INSERT INTO clases (nombre, descripcion, precio) VALUES ('Turista', 'Clase turista con servicios estándar', 300);
+INSERT INTO clases (nombre, descripcion, precio) VALUES ('Ejecutiva', 'Clase ejecutiva con servicios adicionales', 700);
+INSERT INTO clases (nombre, descripcion, precio) VALUES ('Premium', 'Clase premium con servicios mejorados', 800);
+INSERT INTO clases (nombre, descripcion, precio) VALUES ('Familiar', 'Clase familiar con servicios para niños', 400);
+INSERT INTO clases (nombre, descripcion, precio) VALUES ('VIP', 'Clase VIP con servicios personalizados', 1200);
+INSERT INTO clases (nombre, descripcion, precio) VALUES ('Económica Plus', 'Clase económica con servicios adicionales', 350);
+INSERT INTO clases (nombre, descripcion, precio) VALUES ('Lujo', 'Clase de lujo con servicios exclusivos', 1500);
+
+INSERT INTO reservas (id_usuario, id_destino, fecha, clase_reserva) VALUES (1, 1, '2023-01-01', 1);
+INSERT INTO reservas (id_usuario, id_destino, fecha, clase_reserva) VALUES (2, 2, '2023-02-01', 2);
+INSERT INTO reservas (id_usuario, id_destino, fecha, clase_reserva) VALUES (3, 3, '2023-03-01', 3);
+INSERT INTO reservas (id_usuario, id_destino, fecha, clase_reserva) VALUES (4, 4, '2023-04-01', 4);
+INSERT INTO reservas (id_usuario, id_destino, fecha, clase_reserva) VALUES (5, 5, '2023-05-01', 5);
+INSERT INTO reservas (id_usuario, id_destino, fecha, clase_reserva) VALUES (6, 6, '2023-06-01', 6);
+INSERT INTO reservas (id_usuario, id_destino, fecha, clase_reserva) VALUES (7, 7, '2023-07-01', 7);
+INSERT INTO reservas (id_usuario, id_destino, fecha, clase_reserva) VALUES (8, 8, '2023-08-01', 8);
+INSERT INTO reservas (id_usuario, id_destino, fecha, clase_reserva) VALUES (9, 9, '2023-09-01', 9);
+INSERT INTO reservas (id_usuario, id_destino, fecha, clase_reserva) VALUES (10, 10, '2023-10-01', 10);
+
+INSERT INTO origen (nombre, ciudad, pais, descripcion, precio) VALUES ('Aeropuerto Internacional', 'Ciudad de México', 'México', 'Principal aeropuerto de la ciudad', 100);
+INSERT INTO origen (nombre, ciudad, pais, descripcion, precio) VALUES ('Aeropuerto Jorge Chávez', 'Lima', 'Perú', 'Aeropuerto internacional de Lima', 150);
+INSERT INTO origen (nombre, ciudad, pais, descripcion, precio) VALUES ('Aeropuerto de Barajas', 'Madrid', 'España', 'Aeropuerto principal de Madrid', 200);
+INSERT INTO origen (nombre, ciudad, pais, descripcion, precio) VALUES ('Aeropuerto de Narita', 'Tokio', 'Japón', 'Aeropuerto internacional de Tokio', 250);
+INSERT INTO origen (nombre, ciudad, pais, descripcion, precio) VALUES ('Aeropuerto de Heathrow', 'Londres', 'Reino Unido', 'Aeropuerto principal de Londres', 300);
+INSERT INTO origen (nombre, ciudad, pais, descripcion, precio) VALUES ('Aeropuerto de Frankfurt', 'Frankfurt', 'Alemania', 'Aeropuerto internacional de Frankfurt', 350);
+INSERT INTO origen (nombre, ciudad, pais, descripcion, precio) VALUES ('Aeropuerto de Changi', 'Singapur', 'Singapur', 'Aeropuerto internacional de Singapur', 400);
+INSERT INTO origen (nombre, ciudad, pais, descripcion, precio) VALUES ('Aeropuerto de Incheon', 'Seúl', 'Corea del Sur', 'Aeropuerto internacional de Seúl', 450);
+INSERT INTO origen (nombre, ciudad, pais, descripcion, precio) VALUES ('Aeropuerto de Dubai', 'Dubai', 'Emiratos Árabes Unidos', 'Aeropuerto internacional de Dubai', 500);
+INSERT INTO origen (nombre, ciudad, pais, descripcion, precio) VALUES ('Aeropuerto de Los Ángeles', 'Los Ángeles', 'EE.UU.', 'Aeropuerto internacional de Los Ángeles', 550);
+
+INSERT INTO aviones (nombre, modelo, capacidad, origen, destino) VALUES ('Boeing 737', '737-800', 160, 1, 1);
+INSERT INTO aviones (nombre, modelo, capacidad, origen, destino) VALUES ('Airbus A320', 'A320-200', 180, 2, 2);
+INSERT INTO aviones (nombre, modelo, capacidad, origen, destino) VALUES ('Boeing 777', '777-300', 300, 3, 3);
+INSERT INTO aviones (nombre, modelo, capacidad, origen, destino) VALUES ('Airbus A380', 'A380-800', 500, 4, 4);
+INSERT INTO aviones (nombre, modelo, capacidad, origen, destino) VALUES ('Boeing 787', '787-9', 290, 5, 5);
+INSERT INTO aviones (nombre, modelo, capacidad, origen, destino) VALUES ('Airbus A350', 'A350-900', 350, 6, 6);
+INSERT INTO aviones (nombre, modelo, capacidad, origen, destino) VALUES ('Boeing 747', '747-400', 400, 7, 7);
+INSERT INTO aviones (nombre, modelo, capacidad, origen, destino) VALUES ('Airbus A330', 'A330-300', 300, 8, 8);
+INSERT INTO aviones (nombre, modelo, capacidad, origen, destino) VALUES ('Boeing 767', '767-300', 250, 9, 9);
+INSERT INTO aviones (nombre, modelo, capacidad, origen, destino) VALUES ('Airbus A321', 'A321-200', 200, 10, 10);
+
+INSERT INTO vuelos (id_avion, fecha, hora) VALUES (1, '2023-01-01', '08:00:00');
+INSERT INTO vuelos (id_avion, fecha, hora) VALUES (2, '2023-02-01', '09:00:00');
+INSERT INTO vuelos (id_avion, fecha, hora) VALUES (3, '2023-03-01', '10:00:00');
+INSERT INTO vuelos (id_avion, fecha, hora) VALUES (4, '2023-04-01', '11:00:00');
+INSERT INTO vuelos (id_avion, fecha, hora) VALUES (5, '2023-05-01', '12:00:00');
+INSERT INTO vuelos (id_avion, fecha, hora) VALUES (6, '2023-06-01', '13:00:00');
+INSERT INTO vuelos (id_avion, fecha, hora) VALUES (7, '2023-07-01', '14:00:00');
+INSERT INTO vuelos (id_avion, fecha, hora) VALUES (8, '2023-08-01', '15:00:00');
+INSERT INTO vuelos (id_avion, fecha, hora) VALUES (9, '2023-09-01', '16:00:00');
+INSERT INTO vuelos (id_avion, fecha, hora) VALUES (10, '2023-10-01', '17:00:00');
+
