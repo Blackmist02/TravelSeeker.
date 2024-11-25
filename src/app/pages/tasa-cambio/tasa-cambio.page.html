@@ -1,0 +1,22 @@
+<ion-content [fullscreen]="true">
+  <ion-card *ngIf="tasasDeCambio">
+    <ion-card-header>
+      <ion-card-title>Tasas de Cambio</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let currency of objectKeys(tasasDeCambio)">
+          <ion-label>{{ currency }}:{{ tasasDeCambio[currency] }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">tasa-de-cambio</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</ion-content>
