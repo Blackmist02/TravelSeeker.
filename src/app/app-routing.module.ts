@@ -33,6 +33,14 @@ const routes: Routes = [
         loadChildren: () => import('./pages/qr-cam/qr-cam.module').then( m => m.QrCamPageModule)
       },
       {
+        path: 'tasa-cambio',
+        loadChildren: () => import('./pages/tasa-cambio/tasa-cambio.module').then( m => m.TasaCambioPageModule)
+      },
+      {
+        path: 'perfil',
+        loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'
@@ -44,7 +52,6 @@ const routes: Routes = [
       }
     ]
   },
-  
 
 ];
 
