@@ -29,6 +29,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/e404/e404.module').then( m => m.E404PageModule)
       },
       {
+        path: 'qr-cam',
+        loadChildren: () => import('./pages/qr-cam/qr-cam.module').then( m => m.QrCamPageModule)
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'
@@ -39,7 +43,9 @@ const routes: Routes = [
         pathMatch: 'full'
       }
     ]
-  }
+  },
+  
+
 ];
 
 @NgModule({

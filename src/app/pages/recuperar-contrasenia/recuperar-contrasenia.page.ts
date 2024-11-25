@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular'; // Para mostrar alertas
-import { UsuarioService } from 'src/app/services/usuario.service';
+import { SupabaseService } from 'src/app/supabase.service'
 
 @Component({
   selector: 'app-recuperar-contrasenia',
@@ -16,26 +16,31 @@ export class RecuperarContraseniaPage implements OnInit {
   loginVerificarContrasenia: string = '';  // Para confirmar la nueva contraseña
   usuarios: any[] = [];  // Almacena los usuarios del JSON
 
-  constructor(private http: HttpClient, private alertController: AlertController, private router: Router, private usuarioService: UsuarioService ) { }
+  constructor(private http: HttpClient, private alertController: AlertController, private router: Router, private usuarioService: SupabaseService ) { }
 
   ngOnInit() {
   }
 
 
-  // Función para cambiar la contraseña en la bbdd
-  cambiarContra() {
+
+
+  async cambiarContra() {
     if (this.logincontrasenia !== this.loginVerificarContrasenia) {
       this.mostrarAlerta('Error', 'Las contraseñas no coinciden');
       return
     }
-    this.usuarioService.cambiarContrasenia(this.loginusuario, this.logincontrasenia).subscribe((data) => {
-      console.log(data);
+    try {
+      const resultado = await this.usuarioService.cambiarContrasenia(
+        this.loginusuario,
+        this.logincontrasenia
+      );
       this.mostrarAlerta('Contraseña cambiada', 'La contraseña se ha cambiado correctamente');
       this.router.navigate(['/login']);
-    });
 
-
-
+    } catch (error: any) {
+      console.error('Error:', error.message);
+      this.mostrarAlerta('Error', 'No se ha podido cambiar la contraseña');
+    }
   }
   
   // Función para mostrar alertas al usuario

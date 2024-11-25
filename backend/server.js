@@ -1,33 +1,34 @@
 const express = require('express');
-const mysql = require('mysql');
+const { Client } = require('pg'); // Importamos el cliente de PostgreSQL
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
 const port = 3000;
 
+
 app.use(cors());
 app.use(bodyParser.json());
 
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'Ignacio',
-    password: 'Blackmist.3',
-    database: 'db_travelseeker'
+// URL de conexión a PostgreSQL (reemplaza [YOUR-PASSWORD] con tu contraseña)
+const connectionString = 'postgresql://postgres.pqwgwxhduwnowkqiawec:Blakcmist.8824@aws-0-sa-east-1.pooler.supabase.com:6543/postgres';
+
+// Conexión a Supabase
+const db = new Client({
+    connectionString: connectionString,
 });
 
-db.connect(err => {
-    if (err) throw err;
-    console.log('Conectado a MySQL');
-     // Mostrar algún dato de la base de datos
-      db.query('SELECT * FROM usuarios', (err, results) => {
-        if (err) throw err;
-        console.log(results);
-    });
+// Conectar a la base de datos
+db.connect((err) => {
+    if (err) {
+        console.error('Error de conexión a la base de datos:', err.stack);
+    } else {
+        console.log('Conectado a la base de datos en Supabase');
+    }
 });
 
 // Obtener todos los usuarios
-app.get('/api/usuarios', (req, res) => {
+app.get('/usuarios', (req, res) => {
   db.query('SELECT * FROM usuarios', (err, results) => {
     if (err) throw err;
     res.json(results);
@@ -35,7 +36,7 @@ app.get('/api/usuarios', (req, res) => {
 });
 
 // Agregar un nuevo usuario
-app.post('/api/usuarios', (req, res) => {
+app.post('/usuarios', (req, res) => {
     const nuevoUsuario = req.body;
     db.query('INSERT INTO usuarios SET ?', nuevoUsuario, (err, result) => {
     if (err) throw err;
@@ -45,7 +46,7 @@ app.post('/api/usuarios', (req, res) => {
 
 
 //Login
-app.post('/api/usuarios/login', (req, res) => {
+app.post('/usuarios/login', (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -80,7 +81,7 @@ app.post('/api/usuarios/login', (req, res) => {
 });
 
 //obtener origen
-app.get('/api/origen', (req, res) => {
+app.get('/origen', (req, res) => {
     db.query('SELECT * FROM origen', (err, results) => {
         if (err) throw err;
         res.json(results);
@@ -88,7 +89,7 @@ app.get('/api/origen', (req, res) => {
 });
 
 //obtener destino
-app.get('/api/destinos', (req, res) => {
+app.get('/destinos', (req, res) => {
     db.query('SELECT * FROM destinos', (err, results) => {
         if (err) throw err;
         res.json(results);
@@ -96,7 +97,7 @@ app.get('/api/destinos', (req, res) => {
 });
 
 //obtener aviones
-app.get('/api/aviones', (req, res) => {
+app.get('/aviones', (req, res) => {
     db.query('SELECT * FROM aviones', (err, results) => {
         if (err) throw err;
         res.json(results);
@@ -104,7 +105,7 @@ app.get('/api/aviones', (req, res) => {
 });
 
 //obtener clases
-app.get('/api/clases', (req, res) => {
+app.get('/clases', (req, res) => {
     db.query('SELECT * FROM clases', (err, results) => {
         if (err) throw err;
         res.json(results);
@@ -112,7 +113,7 @@ app.get('/api/clases', (req, res) => {
 });
 
 //cambiar contraseña
-app.put('/api/usuarios/:id', (req, res) => {
+app.put('/usuarios/:id', (req, res) => {
     const { id } = req.params;
     const { password } = req.body;
 
@@ -132,5 +133,5 @@ app.put('/api/usuarios/:id', (req, res) => {
 
 // Iniciar el servidor
 app.listen(port, () => {
-    console.log(`Servidor escuchando en http://localhost:${port}`);
+    console.log(`Servidor escuchando en el puerto ${port}`);
 });

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { SupabaseService } from 'src/app/supabase.service'
+
 
 @Component({
   selector: 'app-home',
@@ -21,7 +23,7 @@ export class HomePage implements OnInit {
   numerosPasajeros: number[] = [];
   clasesAv: any[] = [];
 
-  constructor(private router: Router, private usuarioService: UsuarioService) { 
+  constructor(private router: Router, private usuarioService: UsuarioService, private supabaseService: SupabaseService) { 
     this.time = this.getTime();
   }
 
@@ -71,39 +73,36 @@ export class HomePage implements OnInit {
   }
 
   //funcion que obtiene las ciudades de origen
-  getOrigenes(){
-    // Your code here
+  async getOrigenes() {
     console.log('Obteniendo ciudades de origen');
-    this.usuarioService.getOrigenes().subscribe(data => {
-      console.log('Ciudades de origen', data);
-      this.datosCiuadesOrigen = data;
-    }, error => {
-      console.error('Error al obtener ciudades de origen', error);
-    });
+    try {
+      const data = await this.supabaseService.getOrigenes();
+      console.log('Ciudades de origen:', data);
+      this.datosCiuadesOrigen = data; // Asigna los datos al array en tu componente
+    } catch (error) {
+      console.error('Error al obtener ciudades de origen:', error);
+    }
   }
+  
 
   //funcion que obtiene las ciudades de destino
-  getDestinos(){
-    // Your code here
-    console.log('Obteniendo ciudades de Destino');
-    this.usuarioService.getDestino().subscribe(data => {
-      console.log('Ciudades de Destino', data);
+  async getDestinos(){
+    try{
+      const data = await this.supabaseService.getDestinos();
       this.datosCiuadesDestino = data;
-    }, error => {
-      console.error('Error al obtener ciudades de Destino', error);
-    });
+    }catch(error){
+      console.error('Error al obtener ciudades de destino:', error);
+    }
   }
 
   //funcion que obtiene los aviones
-  getAviones(){
-    // Your code here
-    console.log('Obteniendo aviones');
-    this.usuarioService.getNroPasajeros().subscribe(data => {
-      console.log('Aviones', data);
+  async getAviones(){
+    try{
+      const data = await this.supabaseService.getAviones();
       this.datosAviones = data;
-    }, error => {
-      console.error('Error al obtener aviones', error);
-    });
+    }catch(error){
+      console.error('Error al obtener aviones:', error);
+    }
   }
 
   setNumerosPasajeros() {
@@ -111,14 +110,12 @@ export class HomePage implements OnInit {
   }
 
   //funcion que muestra las clases
-  getClases(){
-    // Your code here
-    console.log('Obteniendo clases');
-    this.usuarioService.getClases().subscribe(data => {
-      console.log('Clases', data);
+  async getClases(){
+    try{
+      const data = await this.supabaseService.getClases();
       this.clasesAv = data;
-    }, error => {
-      console.error('Error al obtener clases', error);
-    });
+    }catch(error){
+      console.error('Error al obtener clases:', error);
+    }
   }
 }
