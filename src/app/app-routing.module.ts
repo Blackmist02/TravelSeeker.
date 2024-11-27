@@ -41,6 +41,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
       },
       {
+        path: 'oferta',
+        loadChildren: () => import('./pages/oferta/oferta.module').then( m => m.OfertaPageModule)
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'
@@ -52,6 +56,8 @@ const routes: Routes = [
       }
     ]
   },
+  
+
 
 ];
 
